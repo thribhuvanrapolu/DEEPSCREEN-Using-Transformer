@@ -104,7 +104,7 @@ def train_validation_test_training(target_id, model_name, fully_layer_1, fully_l
     if model_name == "CNNModel1":
         model = CNNModel1(fully_layer_1, fully_layer_2, drop_rate).to(device)
     elif model_name == "VisionTransformer":
-        model = VisionTransformer(img_size=224, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.25, attn_drop_rate=0.0)
+        model = VisionTransformer(img_size=200, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.25, attn_drop_rate=0.0)
         
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss()
