@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import torch.nn as nn
 from models import CNNModel1
+from models import VisionTransformer
 from torch.autograd import Variable
 from data_processing import get_train_test_val_data_loaders
 from evaluation_metrics import prec_rec_f1_acc_mcc, get_list_of_scores
@@ -102,6 +103,9 @@ def train_validation_test_training(target_id, model_name, fully_layer_1, fully_l
     model = None
     if model_name == "CNNModel1":
         model = CNNModel1(fully_layer_1, fully_layer_2, drop_rate).to(device)
+    elif model_name == "VisionTransformer":
+        model = VisionTransformer(img_size=224, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate, attn_drop_rate=0.0)
+        
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss()
     optimizer.zero_grad()
