@@ -1,48 +1,48 @@
-# import torch
-# import torch.nn as nn
-# import torch.nn.functional as F
-# from operator import itemgetter
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from operator import itemgetter
 
-# class CNNModel1(nn.Module):
-#     def __init__(self, fully_layer_1, fully_layer_2, drop_rate):
-#         super(CNNModel1, self).__init__()
+class CNNModel1(nn.Module):
+    def __init__(self, fully_layer_1, fully_layer_2, drop_rate):
+        super(CNNModel1, self).__init__()
 
-#         self.conv1 = nn.Conv2d(3, 32, 2)
-#         self.bn1 = nn.BatchNorm2d(32)
-#         self.conv2 = nn.Conv2d(32, 64, 2)
-#         self.bn2 = nn.BatchNorm2d(64)
-#         self.conv3 = nn.Conv2d(64, 128, 2)
-#         self.bn3 = nn.BatchNorm2d(128)
-#         self.conv4 = nn.Conv2d(128, 64, 2)
-#         self.bn4 = nn.BatchNorm2d(64)
-#         self.conv5 = nn.Conv2d(64, 32, 2)
-#         self.bn5 = nn.BatchNorm2d(32)
+        self.conv1 = nn.Conv2d(3, 32, 2)
+        self.bn1 = nn.BatchNorm2d(32)
+        self.conv2 = nn.Conv2d(32, 64, 2)
+        self.bn2 = nn.BatchNorm2d(64)
+        self.conv3 = nn.Conv2d(64, 128, 2)
+        self.bn3 = nn.BatchNorm2d(128)
+        self.conv4 = nn.Conv2d(128, 64, 2)
+        self.bn4 = nn.BatchNorm2d(64)
+        self.conv5 = nn.Conv2d(64, 32, 2)
+        self.bn5 = nn.BatchNorm2d(32)
 
-#         self.pool = nn.MaxPool2d(2, 2)
-#         self.drop_rate = drop_rate
-#         self.fc1 = nn.Linear(32*5*5, fully_layer_1)
-#         self.fc2 = nn.Linear(fully_layer_1, fully_layer_2)
-#         self.fc3 = nn.Linear(fully_layer_2, 2)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.drop_rate = drop_rate
+        self.fc1 = nn.Linear(32*5*5, fully_layer_1)
+        self.fc2 = nn.Linear(fully_layer_1, fully_layer_2)
+        self.fc3 = nn.Linear(fully_layer_2, 2)
 
-#     def forward(self, x):
-#         # print(x.shape)
-#         x = self.pool(F.relu(self.bn1(self.conv1(x))))
-#         # print(x.shape)
-#         x = self.pool(F.relu(self.bn2(self.conv2(x))))
-#         # print(x.shape)
-#         x = self.pool(F.relu(self.bn3(self.conv3(x))))
-#         # print(x.shape)
-#         x = self.pool(F.relu(self.bn4(self.conv4(x))))
-#         # print(x.shape)
-#         x = self.pool(F.relu(self.bn5(self.conv5(x))))
-#         # print(x.shape)
+    def forward(self, x):
+        # print(x.shape)
+        x = self.pool(F.relu(self.bn1(self.conv1(x))))
+        # print(x.shape)
+        x = self.pool(F.relu(self.bn2(self.conv2(x))))
+        # print(x.shape)
+        x = self.pool(F.relu(self.bn3(self.conv3(x))))
+        # print(x.shape)
+        x = self.pool(F.relu(self.bn4(self.conv4(x))))
+        # print(x.shape)
+        x = self.pool(F.relu(self.bn5(self.conv5(x))))
+        # print(x.shape)
 
-#         x = x.view(-1, 32*5*5)
-#         x = F.dropout(F.relu(self.fc1(x)), self.drop_rate)
-#         x = F.dropout(F.relu(self.fc2(x)), self.drop_rate)
-#         x = self.fc3(x)
+        x = x.view(-1, 32*5*5)
+        x = F.dropout(F.relu(self.fc1(x)), self.drop_rate)
+        x = F.dropout(F.relu(self.fc2(x)), self.drop_rate)
+        x = self.fc3(x)
 
-#         return x
+        return x
 
 # # TODO: Create other models
 
@@ -127,7 +127,7 @@ class Block(nn.Module):
         return x
 
 class VisionTransformer(nn.Module):
-    def __init__(self, img_size=224, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.0, attn_drop_rate=0.0):
+    def __init__(self, img_size=224, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.25, attn_drop_rate=0.0):
         super(VisionTransformer, self).__init__()
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim
