@@ -105,6 +105,7 @@ def train_validation_test_training(target_id, model_name, fully_layer_1, fully_l
         model = CNNModel1(fully_layer_1, fully_layer_2, drop_rate).to(device)
     elif model_name == "VisionTransformer":
         model = VisionTransformer(img_size=200, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.25, attn_drop_rate=0.0)
+        model = model.to(device)
         
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss()
@@ -129,7 +130,11 @@ def train_validation_test_training(target_id, model_name, fully_layer_1, fully_l
             # clear gradient DO NOT forget you fool!
             optimizer.zero_grad()
             img_arrs, labels, comp_ids = data
-            img_arrs, labels = torch.tensor(img_arrs).type(torch.FloatTensor).to(device), torch.tensor(labels).to(device)
+            
+            img_arrs = img_arrs.to(device)  # Add this line
+            labels = labels.to(device)
+            
+            # img_arrs, labels = torch.tensor(img_arrs).type(torch.FloatTensor).to(device), torch.tensor(labels).to(device)
 
             total_training_count += len(comp_ids)
             y_pred = model(img_arrs).to(device)
