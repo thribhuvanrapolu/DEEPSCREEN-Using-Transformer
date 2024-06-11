@@ -46,7 +46,6 @@ class CNNModel1(nn.Module):
 
 # # TODO: Create other models
 
-
 import torch
 import torch.nn as nn
 
@@ -127,7 +126,7 @@ class Block(nn.Module):
         return x
 
 class VisionTransformer(nn.Module):
-    def __init__(self, img_size=224, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.25, attn_drop_rate=0.0):
+    def __init__(self, img_size=200, patch_size=16, in_channels=3, num_classes=2, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4.0, qkv_bias=False, drop_rate=0.0, attn_drop_rate=0.0):
         super(VisionTransformer, self).__init__()
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim
@@ -150,9 +149,13 @@ class VisionTransformer(nn.Module):
     def forward(self, x):
         B = x.shape[0]
         x = self.patch_embed(x)
+        print(f"Patch embedding output shape: {x.shape}")  # Debug statement
 
         cls_tokens = self.cls_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, x), dim=1)
+        print(f"Shape after adding cls_token: {x.shape}")  # Debug statement
+        print(f"Positional embedding shape: {self.pos_embed.shape}")  # Debug statement
+
         x = x + self.pos_embed
         x = self.pos_drop(x)
 
